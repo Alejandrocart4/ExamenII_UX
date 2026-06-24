@@ -47,4 +47,7 @@ pnpm dev
 - `GET /api/categories`
 - `POST /api/categories`
 
+- ## FIGMA
+- https://www.figma.com/make/QEvYwwo3E7HJJWkN6fKpd9/Modulo-de-inventario?t=2lnGmAWuhKXGPvEf-20&fullscreen=1
+
 - ## Jonny Alejandro Gomez Cartagena
