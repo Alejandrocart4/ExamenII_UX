@@ -18,6 +18,25 @@ export default function App() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
+  function formatPrice(value) {
+    return Number(value).toLocaleString('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    });
+  }
+
+  function stockStatus(stock) {
+    if (stock === 0) {
+      return 'agotado';
+    }
+
+    if (stock <= 5) {
+      return 'bajo';
+    }
+
+    return '';
+  }
+
   async function loadCategories() {
     const data = await getCategories();
     setCategories(data);
@@ -112,74 +131,90 @@ export default function App() {
   }
 
   return (
-    <div className="page-shell">
-      <header className="hero">
+    <div className="app-shell">
+      <header className="topbar">
         <div>
-          <p className="eyebrow">Sistema de gestion de inventario</p>
-          <h1>Tech Store</h1>
-          <p className="subtitle">
-            Modulo web para registrar, clasificar y consultar productos tecnologicos por categoria.
-          </p>
+          <h1>Tech Store — Sistema de Gestion de Inventario</h1>
+          <p>Modulo de inventario · Gestion de categorias y productos</p>
         </div>
-        <a className="docs-link" href="http://localhost:3000/api-docs" target="_blank" rel="noreferrer">
-          Ver Swagger
+        <a className="docs-button" href="http://localhost:3000/api-docs" target="_blank" rel="noreferrer">
+          Documentacion API
         </a>
       </header>
 
-      <main className="dashboard">
-        <section className="panel">
-          <h2>Registrar categoria</h2>
-          <form onSubmit={handleCategorySubmit} className="form-grid">
+      <main className="content-grid">
+        <section className="card">
+          <div className="section-heading">
+            <h2>CREAR CATEGORIA</h2>
+          </div>
+          <form onSubmit={handleCategorySubmit} className="form-layout">
             <label>
-              Nombre
+              NOMBRE
               <input
                 value={categoryName}
                 onChange={(event) => setCategoryName(event.target.value)}
                 placeholder="Ej. Laptops"
               />
             </label>
-            <button type="submit">Crear categoria</button>
+            <button type="submit" className="dark-button">Registrar categoria</button>
           </form>
+
+          <div className="category-list">
+            <p>CATEGORIAS REGISTRADAS</p>
+            <div className="pill-row">
+              {categories.map((category, index) => (
+                <span key={category.id} className="pill">
+                  #{index + 1} {category.name}
+                </span>
+              ))}
+            </div>
+          </div>
         </section>
 
-        <section className="panel">
-          <h2>Registrar producto</h2>
-          <form onSubmit={handleProductSubmit} className="form-grid">
+        <section className="card">
+          <div className="section-heading">
+            <h2>CREAR PRODUCTO</h2>
+          </div>
+          <form onSubmit={handleProductSubmit} className="form-layout">
             <label>
-              Nombre
+              NOMBRE
               <input
                 value={productForm.name}
                 onChange={(event) => setProductForm({ ...productForm, name: event.target.value })}
-                placeholder="Ej. Laptop Dell Inspiron"
+                placeholder="Ej. iPhone 15 Pro"
               />
             </label>
+            <div className="inline-fields">
+              <label>
+                PRECIO
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={productForm.price}
+                  onChange={(event) => setProductForm({ ...productForm, price: event.target.value })}
+                  placeholder="0.00"
+                />
+              </label>
+              <label>
+                EXISTENCIAS
+                <input
+                  type="number"
+                  min="0"
+                  step="1"
+                  value={productForm.stock}
+                  onChange={(event) => setProductForm({ ...productForm, stock: event.target.value })}
+                  placeholder="0"
+                />
+              </label>
+            </div>
             <label>
-              Precio
-              <input
-                type="number"
-                min="0"
-                step="0.01"
-                value={productForm.price}
-                onChange={(event) => setProductForm({ ...productForm, price: event.target.value })}
-              />
-            </label>
-            <label>
-              Stock
-              <input
-                type="number"
-                min="0"
-                step="1"
-                value={productForm.stock}
-                onChange={(event) => setProductForm({ ...productForm, stock: event.target.value })}
-              />
-            </label>
-            <label>
-              Categoria
+              CATEGORIA
               <select
                 value={productForm.categoryId}
                 onChange={(event) => setProductForm({ ...productForm, categoryId: event.target.value })}
               >
-                <option value="">Seleccione una categoria</option>
+                <option value="">Seleccionar categoria</option>
                 {categories.map((category) => (
                   <option key={category.id} value={category.id}>
                     {category.name}
@@ -187,57 +222,81 @@ export default function App() {
                 ))}
               </select>
             </label>
-            <button type="submit" disabled={!categories.length}>
-              Crear producto
+            <button type="submit" className="primary-button" disabled={!categories.length}>
+              Registrar producto
             </button>
           </form>
         </section>
 
-        <section className="panel">
-          <div className="panel-header">
+        <section className="card card-wide">
+          <div className="table-header">
             <div>
-              <h2>Inventario registrado</h2>
-              <p>{loading ? 'Cargando datos...' : `${products.length} producto(s) encontrados`}</p>
+              <div className="section-heading">
+                <h2>PRODUCTOS</h2>
+              </div>
+              <p className="results-copy">{loading ? 'Cargando datos...' : `${products.length} resultados`}</p>
             </div>
-            <label className="filter">
-              Filtrar por categoria
-              <select value={selectedCategoryId} onChange={handleFilterChange}>
-                <option value="">Todas</option>
+            <div className="filters-wrap">
+              <span>Filtrar:</span>
+              <div className="pill-row">
+                <button
+                  type="button"
+                  className={selectedCategoryId === '' ? 'filter-pill active' : 'filter-pill'}
+                  onClick={() => handleFilterChange({ target: { value: '' } })}
+                >
+                  Todas
+                </button>
                 {categories.map((category) => (
-                  <option key={category.id} value={category.id}>
+                  <button
+                    key={category.id}
+                    type="button"
+                    className={selectedCategoryId === category.id ? 'filter-pill active' : 'filter-pill'}
+                    onClick={() => handleFilterChange({ target: { value: category.id } })}
+                  >
                     {category.name}
-                  </option>
+                  </button>
                 ))}
-              </select>
-            </label>
+              </div>
+            </div>
           </div>
 
           {message ? <p className="feedback success">{message}</p> : null}
           {error ? <p className="feedback error">{error}</p> : null}
 
-          <div className="table-wrap">
+          <div className="table-container">
             <table>
               <thead>
                 <tr>
-                  <th>Producto</th>
-                  <th>Categoria</th>
-                  <th>Precio</th>
-                  <th>Stock</th>
+                  <th>ID</th>
+                  <th>NOMBRE</th>
+                  <th>CATEGORIA</th>
+                  <th>PRECIO</th>
+                  <th>STOCK</th>
                 </tr>
               </thead>
               <tbody>
                 {products.length > 0 ? (
-                  products.map((product) => (
+                  products.map((product, index) => (
                     <tr key={product.id}>
-                      <td>{product.name}</td>
-                      <td>{product.category?.name || 'Sin categoria'}</td>
-                      <td>${product.price}</td>
-                      <td>{product.stock}</td>
+                      <td>{index + 1}</td>
+                      <td className="product-name">{product.name}</td>
+                      <td>
+                        <span className="table-pill">{product.category?.name || 'Sin categoria'}</span>
+                      </td>
+                      <td>{formatPrice(product.price)}</td>
+                      <td className="stock-cell">
+                        <strong>{product.stock}</strong>
+                        {stockStatus(product.stock) ? (
+                          <span className={`stock-tag ${stockStatus(product.stock)}`}>
+                            {stockStatus(product.stock)}
+                          </span>
+                        ) : null}
+                      </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="4">No hay productos para mostrar.</td>
+                    <td colSpan="5">No hay productos para mostrar.</td>
                   </tr>
                 )}
               </tbody>

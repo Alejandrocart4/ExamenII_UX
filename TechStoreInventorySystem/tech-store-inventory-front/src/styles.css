@@ -1,9 +1,7 @@
 :root {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: #10212f;
-  background:
-    radial-gradient(circle at top right, rgba(9, 146, 201, 0.18), transparent 24rem),
-    linear-gradient(180deg, #f3f8fb 0%, #e3edf4 100%);
+  color: #12233d;
+  background: #f3f5f8;
   line-height: 1.5;
   font-weight: 400;
 }
@@ -24,133 +22,209 @@ select {
   font: inherit;
 }
 
-.page-shell {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem 1.25rem 3rem;
+.app-shell {
+  min-height: 100vh;
 }
 
-.hero {
+.topbar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 1rem;
-  align-items: flex-start;
-  margin-bottom: 1.5rem;
-  padding: 1.5rem;
-  border-radius: 24px;
-  background: linear-gradient(135deg, #0d2538, #176087);
-  color: #f6fbff;
-  box-shadow: 0 20px 50px rgba(13, 37, 56, 0.18);
+  padding: 1.4rem 4.5rem;
+  background: #ffffff;
+  border-bottom: 1px solid #d8dee7;
 }
 
-.eyebrow {
-  margin: 0 0 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: 0.75rem;
-  opacity: 0.76;
-}
-
-.hero h1 {
+.topbar h1 {
   margin: 0;
-  font-size: clamp(2rem, 3vw, 3rem);
+  font-size: 1.1rem;
 }
 
-.subtitle {
-  max-width: 42rem;
-  margin: 0.75rem 0 0;
+.topbar p {
+  margin: 0.35rem 0 0;
+  color: #617089;
 }
 
-.docs-link {
-  color: #0d2538;
+.docs-button {
   text-decoration: none;
-  background: #f3c969;
-  padding: 0.9rem 1rem;
-  border-radius: 999px;
+  color: #23344d;
+  border: 1px solid #cdd5df;
+  background: #ffffff;
+  padding: 0.85rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.content-grid {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 1.9rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #dce2eb;
+  border-radius: 10px;
+  padding: 1.45rem;
+}
+
+.card-wide {
+  grid-column: 1 / -1;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid #edf1f5;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.section-heading span {
+  color: #8190a8;
+  font-size: 0.85rem;
   font-weight: 700;
 }
 
-.dashboard {
-  display: grid;
-  gap: 1.25rem;
-}
-
-.panel {
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(16, 33, 47, 0.08);
-  border-radius: 20px;
-  padding: 1.25rem;
-  box-shadow: 0 18px 40px rgba(12, 35, 52, 0.08);
-}
-
-.panel-header {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  align-items: end;
-  margin-bottom: 1rem;
-}
-
-.panel h2 {
-  margin-top: 0;
-  margin-bottom: 0.35rem;
-}
-
-.form-grid {
+.form-layout {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
 }
 
-.form-grid label,
-.filter {
+.form-layout label {
   display: grid;
   gap: 0.45rem;
   font-weight: 600;
+  color: #21324b;
+}
+
+.inline-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
 }
 
 input,
 select {
   width: 100%;
-  border: 1px solid #c4d3df;
-  border-radius: 12px;
-  padding: 0.8rem 0.9rem;
-  background: #fff;
+  border: 1px solid #cfd7e3;
+  border-radius: 8px;
+  padding: 0.85rem 0.95rem;
+  background: #ffffff;
+  color: #21324b;
 }
 
 button {
   border: 0;
-  border-radius: 14px;
-  padding: 0.9rem 1.1rem;
-  background: #0f7ea7;
-  color: white;
+  border-radius: 8px;
+  padding: 0.95rem 1.1rem;
+  color: #ffffff;
   font-weight: 700;
   cursor: pointer;
-  align-self: end;
 }
 
 button:disabled {
-  opacity: 0.65;
+  opacity: 0.7;
   cursor: not-allowed;
 }
 
-.feedback {
-  border-radius: 12px;
-  padding: 0.8rem 0.9rem;
+.dark-button {
+  background: #263247;
+}
+
+.primary-button {
+  background: #2e63eb;
+}
+
+.category-list {
+  margin-top: 1.4rem;
+}
+
+.category-list p,
+.results-copy {
+  margin: 0 0 0.75rem;
+  color: #8290a8;
+}
+
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.pill,
+.table-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid #d6dde8;
+  border-radius: 7px;
+  background: #f6f8fb;
+  color: #42546d;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.filters-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.filters-wrap > span {
+  color: #51627a;
   font-weight: 600;
 }
 
+.filter-pill {
+  background: #ffffff;
+  color: #21324b;
+  border: 1px solid #cfd7e3;
+  padding: 0.55rem 0.95rem;
+}
+
+.filter-pill.active {
+  background: #2e63eb;
+  color: #ffffff;
+  border-color: #2e63eb;
+}
+
+.feedback {
+  border-radius: 8px;
+  padding: 0.8rem 0.95rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
 .success {
-  background: #e5f8ef;
-  color: #116a3a;
+  background: #e9f9ef;
+  color: #1d7744;
 }
 
 .error {
-  background: #fdeaea;
-  color: #9b1e1e;
+  background: #fdeced;
+  color: #b0232a;
 }
 
-.table-wrap {
+.table-container {
   overflow-x: auto;
 }
 
@@ -162,21 +236,68 @@ table {
 th,
 td {
   text-align: left;
-  padding: 0.9rem 0.75rem;
-  border-bottom: 1px solid #dce6ee;
+  padding: 0.95rem 0.75rem;
+  border-top: 1px solid #edf1f5;
 }
 
 th {
-  color: #385264;
+  color: #5a6c85;
+  font-weight: 700;
+}
+
+.product-name {
+  font-weight: 700;
+}
+
+.stock-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.stock-tag {
+  font-size: 0.85rem;
+  padding: 0.18rem 0.4rem;
+  border-radius: 6px;
+  border: 1px solid transparent;
+}
+
+.stock-tag.bajo {
+  color: #cb7a00;
+  background: #fff3da;
+  border-color: #ffd28b;
+}
+
+.stock-tag.agotado {
+  color: #e11d2e;
+  background: #fff0f1;
+  border-color: #ffb8be;
+}
+
+@media (max-width: 900px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 720px) {
-  .hero,
-  .panel-header {
+  .topbar,
+  .table-header,
+  .inline-fields {
+    grid-template-columns: 1fr;
     flex-direction: column;
   }
 
-  .docs-link {
+  .topbar {
+    padding: 1.2rem;
+    align-items: flex-start;
+  }
+
+  .content-grid {
+    padding: 1rem;
+  }
+
+  .docs-button {
     width: 100%;
     text-align: center;
   }
