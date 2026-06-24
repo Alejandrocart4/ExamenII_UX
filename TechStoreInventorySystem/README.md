@@ -46,3 +46,5 @@ pnpm dev
 - `POST /api/product`
 - `GET /api/categories`
 - `POST /api/categories`
+
+- ## Jonny Alejandro Gomez Cartagena
