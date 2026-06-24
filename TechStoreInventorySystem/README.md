@@ -1,6 +1,6 @@
 # Tech Store Inventory System
 
-Proyecto de examen basado en el enunciado "sistema de gestion de inventario tech store" y construido tomando como referencia el stack del proyecto local `CallCenter`.
+Proyecto de examen basado en el enunciado "sistema de gestion de inventario tech store" 
 
 ## Estructura
 
